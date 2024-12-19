@@ -1,0 +1,6 @@
+question,option_A,option_B,option_C,option_D,answer_key,answer_text
+1,What is the capital of Australia?,Sydney,Melbourne,Canberra,Perth,c
+2,Which of the following is not a type of cloud service model?,IaaS (Infrastructure as a Service),PaaS (Platform as a Service),SaaS (Software as a Service),CaaS (Cloud as a Service),d
+3,What is the smallest country in the world by land area?,Monaco,Vatican City,San Marino,Liechtenstein,b
+4,Which programming language was created by Guido van Rossum?,Python,Java,C++,JavaScript,a
+5,What is the name of the largest moon in our solar system?,Phobos,Callisto,Ganymede,Titan,d

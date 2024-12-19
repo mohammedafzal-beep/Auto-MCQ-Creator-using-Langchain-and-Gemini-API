@@ -1,0 +1,1 @@
+The PyPDF2 package is a pure-Python PDF library that you can use for splitting, merging, cropping and transforming pages in your PDFs. It can also add custom data, viewing options, and passwords to PDF files. It can extract text data from PDF files, and you can also use it to read and modify existing PDF files.
