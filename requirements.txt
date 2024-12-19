@@ -1,0 +1,6 @@
+setuptools
+huggingface_hub
+streamlit
+PyPDF2
+
+-e .
