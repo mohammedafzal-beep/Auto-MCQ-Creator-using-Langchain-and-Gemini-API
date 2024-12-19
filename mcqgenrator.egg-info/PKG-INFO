@@ -6,3 +6,4 @@ Author-email: mhdafz9@gmail.com
 Requires-Dist: huggingface_hub
 Requires-Dist: streamlit
 Requires-Dist: PyPDF2
+Requires-Dist: python-dotenv
