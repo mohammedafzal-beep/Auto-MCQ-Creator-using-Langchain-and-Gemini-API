@@ -1,99 +1,70 @@
 import os
 import json
-import pandas as pd
-from PyPDF2 import PdfReader
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from langchain.chains import SequentialChain
 
-file_path = r"C:\Users\afz31\mcq_gen\data.txt"
-with open(file_path, 'r') as file:
-    text = file.read()
+def load_template(file_path):
+    """Utility function to read the combined template from a file."""
+    with open(file_path, 'r') as file:
+        return file.read()
 
-response_json = {
-    "1": {
-        "mcq": "multiple choice question",
-        "options": {
-            "a": "choice here",
-            "b": "choice here",
-            "c": "choice here",
-            "d": "choice here",
-        },
-        "correct": "correct answer",
-    },
-}
+def generate_quiz(TEXT, NUMBER, SUBJECT, TONE, RESPONSE_JSON):
+    # Load combined template from a .txt file
+    combined_template = load_template('templates.txt')
 
-prompt=f"""
-{text}
-Create some unique MCQs in json string like below:
-{response_json}
-"""
+    # Split the combined template into parts for different purposes
+    templates = combined_template.split('\n\n')
 
-from huggingface_hub import InferenceClient
+    # Define prompt templates using the split parts
+    quiz_generation_prompt = PromptTemplate(
+        input_variables=["text", "number", "subject", "tone", "response_json"],
+        template=templates[0]
+    )
 
-from dotenv import load_dotenv
+    quiz_evaluation_prompt = PromptTemplate(
+        input_variables=["quiz"],
+        template=templates[1]
+    )
 
-load_dotenv()  # take environment variables from .env.
+    complexity_analysis_prompt = PromptTemplate(
+        input_variables=["updated_quiz", "subject"],
+        template=templates[2]
+    )
 
-KEY=os.getenv("KEY")
+    # Read the API key
+    with open(r'C:\Users\afz31\mcq_gen\api_key.txt', 'r') as file:
+        KEY = file.read()
 
-# Initialize the client
-client = InferenceClient(api_key=KEY)
+    os.environ["GOOGLE_API_KEY"] = KEY
 
-# Define the message
-messages = [
-    {
-        "role": "user",
-        "content": prompt
-    }
-]
+    model_options = ["gemini-1.5-pro", "gemini-1.5-flash-8b"]
+    for model in model_options:
+        try:
+            llm = ChatGoogleGenerativeAI(model=model)
+            
+            generate_chain = LLMChain(llm=llm, prompt=quiz_generation_prompt, output_key="quiz", verbose=True)
+            evaluate_chain = LLMChain(llm=llm, prompt=quiz_evaluation_prompt, output_key="updated_quiz", verbose=True)
+            analysis_chain = LLMChain(llm=llm, prompt=complexity_analysis_prompt, output_key="complexity_analysis", verbose=True)
 
-# Attempt to get a response
-completion = client.chat.completions.create(
-    model="Qwen/Qwen2.5-72B-Instruct",
-    messages=messages,
-)
+            gen_eval_analysis_chain = SequentialChain(
+                chains=[generate_chain, evaluate_chain, analysis_chain],
+                input_variables=["text", "number", "subject", "tone", "response_json"],
+                output_variables=["updated_quiz", "complexity_analysis"],
+                verbose=True,
+            )
 
-quiz = completion.choices[0].message.content
+            return gen_eval_analysis_chain({
+                "text": TEXT,
+                "number": NUMBER,
+                "subject": SUBJECT,
+                "tone": TONE,
+                "response_json": json.dumps(RESPONSE_JSON),
+            })
 
-import re
+        except Exception as e:
+            print(f"Error with model {model}: {e}")
+            print("Trying again with the next available model...")
 
-# Regex to extract questions, options, and answers
-pattern = r'"(\d+)": {\s*"mcq": "(.*?)",\s*"options": {\s*"a": "(.*?)",\s*"b": "(.*?)",\s*"c": "(.*?)",\s*"d": "(.*?)"\s*},\s*"correct": "(.*?)"\s*}'
-
-matches = re.findall(pattern, quiz)
-
-# Create a list of dictionaries to store the MCQs
-mcqs = []
-for match in matches:
-    question, option_a, option_b, option_c, option_d, answer_key, answer_text = match
-    mcqs.append({
-        "question": question.strip(),
-        "options": {
-            "A": option_a.strip(),
-            "B": option_b.strip(),
-            "C": option_c.strip(),
-            "D": option_d.strip()
-        },
-        "answer": {
-            "key": answer_key.strip(),
-            "text": answer_text.strip()
-        }
-    })
-
-# Convert the MCQs list to a JSON string
-mcqs_json = json.dumps(mcqs, indent=4)
-
-data = []
-for mcq in mcqs:
-    data.append({
-        "question": mcq["question"],
-        "option_A": mcq["options"]["A"],
-        "option_B": mcq["options"]["B"],
-        "option_C": mcq["options"]["C"],
-        "option_D": mcq["options"]["D"],
-        "answer_key": mcq["answer"]["key"],
-        "answer_text": mcq["answer"]["text"]
-    })
-
-# Create the DataFrame
-df = pd.DataFrame(data)
-
-df.to_csv("quiz_data.csv",index=False)
+    raise RuntimeError("All models failed to generate the quiz.")

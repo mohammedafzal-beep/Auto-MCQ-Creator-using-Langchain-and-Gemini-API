@@ -1,0 +1,18 @@
+Text:{text}
+You are an expert MCQ maker. Given the above text, it is your job to create a quiz of {number} multiple choice questions for {subject} students in {tone} tone.
+Make sure the questions are not repeated and check all the questions to be conforming to the text as well.
+Make sure to format your response like RESPONSE_JSON below and use it as a guide. 
+Ensure to make {number} MCQs.
+### RESPONSE_JSON
+{response_json}
+
+You are an expert English grammarian and writer.
+If the quiz is not at par with the cognitive and analytical abilities of the students, update the quiz questions which need to be changed and change the tone such that it perfectly fits the students' abilities.
+Quiz_MCQs:
+{quiz}
+(ONLY generate the updated quiz in the quiz format, nothing more)
+Check from an expert English Writer of the above quiz:
+
+{updated_quiz}
+Given a Multiple Choice Quiz for {subject} students, you need to evaluate the complexity of the questions but ONLY use at max 50 words for complexity analysis. 
+DON'T mention the quiz is revised or updated.

@@ -1,6 +1,6 @@
-question,option_A,option_B,option_C,option_D,answer_key,answer_text
-1,What is the capital of Australia?,Sydney,Melbourne,Canberra,Perth,c
-2,Which of the following is not a type of cloud service model?,IaaS (Infrastructure as a Service),PaaS (Platform as a Service),SaaS (Software as a Service),CaaS (Cloud as a Service),d
-3,What is the smallest country in the world by land area?,Monaco,Vatican City,San Marino,Liechtenstein,b
-4,Which programming language was created by Guido van Rossum?,Python,Java,C++,JavaScript,a
-5,What is the name of the largest moon in our solar system?,Phobos,Callisto,Ganymede,Titan,d
+mcq,options,correct
+The PyPDF2 package in Python is primarily designed for:,"{'a': 'Manipulating and interacting with PDF files.', 'b': 'Creating and editing presentations.', 'c': 'Performing complex statistical analysis.', 'd': 'Developing web applications.'}",a
+PyPDF2 allows you to perform which of the following actions on PDF pages?,"{'a': 'Combining and separating pages.', 'b': 'Modifying image sizes within the PDF.', 'c': 'Converting PDF files to other document formats.', 'd': 'Performing optical character recognition (OCR).'}",a
+Which security features can be added to PDF files using PyPDF2?,"{'a': 'Adding interactive elements like animations.', 'b': 'Setting passwords and restricting viewing permissions.', 'c': 'Encrypting the entire PDF document with advanced algorithms.', 'd': 'Digitally signing the PDF for authentication purposes.'}",b
+What type of information can PyPDF2 extract from PDF files?,"{'a': 'Text content.', 'b': 'Embedded images and tables.', 'c': 'Metadata, such as author and creation date.', 'd': 'Form field data.'}",a
+"In terms of its programming language implementation, PyPDF2 is:","{'a': 'Written entirely in Python.', 'b': 'Built using a combination of Python and C++.', 'c': 'Primarily written in Java with Python bindings.', 'd': 'Developed using a specialized PDF scripting language.'}",a

@@ -1,5 +1,5 @@
-python-dotenv
-huggingface-hub
+langchain_google_genai
+langchain
 streamlit
 PyPDF2
 
