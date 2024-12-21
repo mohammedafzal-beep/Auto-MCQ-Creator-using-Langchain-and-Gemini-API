@@ -24,19 +24,19 @@ with st.form("user_inputs"):
     #subject
     subject=st.text_input("Insert Subject", max_chars=20)
 
-    #Quiz tone
-    tone=st.text_input("Complexity level of Questions", max_chars=20, placeholder="Simple")
+    #Quiz level
+    level=st.text_input("Complexity level of Questions", max_chars=20, placeholder="Simple")
 
     #add button
     button = st.form_submit_button("Create MCQs")
 
     #check if the button is clicked and all fields have input
 
-    if button and uploaded_file is not None and mcq_count and subject and tone:
+    if button and uploaded_file is not None and mcq_count and subject and level:
         with st.spinner("Loading....."):
             try:
                 text=read_file(uploaded_file)
-                response = generate_quiz(text,mcq_count,subject,tone,RESPONSE_JSON)
+                response = generate_quiz(text,mcq_count,subject,level,RESPONSE_JSON)
 
             except Exception as e:
                 traceback.print_exception(type(e),e,e.__traceback__)

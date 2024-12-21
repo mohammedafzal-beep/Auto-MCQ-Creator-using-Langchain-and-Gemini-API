@@ -10,7 +10,7 @@ def load_template(file_path):
     with open(file_path, 'r') as file:
         return file.read()
 
-def generate_quiz(TEXT, NUMBER, SUBJECT, TONE, RESPONSE_JSON):
+def generate_quiz(TEXT, NUMBER, SUBJECT, LEVEL, RESPONSE_JSON):
     # Load combined template from a .txt file
     combined_template = load_template('templates.txt')
 
@@ -19,7 +19,7 @@ def generate_quiz(TEXT, NUMBER, SUBJECT, TONE, RESPONSE_JSON):
 
     # Define prompt templates using the split parts
     quiz_generation_prompt = PromptTemplate(
-        input_variables=["text", "number", "subject", "tone", "response_json"],
+        input_variables=["text", "number", "subject", "level", "response_json"],
         template=templates[0]
     )
 
@@ -50,7 +50,7 @@ def generate_quiz(TEXT, NUMBER, SUBJECT, TONE, RESPONSE_JSON):
 
             gen_eval_analysis_chain = SequentialChain(
                 chains=[generate_chain, evaluate_chain, analysis_chain],
-                input_variables=["text", "number", "subject", "tone", "response_json"],
+                input_variables=["text", "number", "subject", "level", "response_json"],
                 output_variables=["updated_quiz", "complexity_analysis"],
                 verbose=True,
             )
@@ -59,7 +59,7 @@ def generate_quiz(TEXT, NUMBER, SUBJECT, TONE, RESPONSE_JSON):
                 "text": TEXT,
                 "number": NUMBER,
                 "subject": SUBJECT,
-                "tone": TONE,
+                "level": LEVEL,
                 "response_json": json.dumps(RESPONSE_JSON),
             })
 
