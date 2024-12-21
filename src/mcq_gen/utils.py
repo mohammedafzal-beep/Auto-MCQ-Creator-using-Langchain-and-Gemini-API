@@ -1,11 +1,11 @@
-import PyPDF2
+from PyPDF2 import PdfReader
 import traceback
 import re
 
 def read_file(file):
     if file.name.endswith(".pdf"):
         try:
-            pdf_reader=PyPDF2.PdfFileReader(file)
+            pdf_reader=PdfReader(file)
             text=""
             for page in pdf_reader.pages:
                 text+=page.extract_text()

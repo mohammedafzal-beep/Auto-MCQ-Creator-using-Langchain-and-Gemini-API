@@ -25,7 +25,7 @@ with st.form("user_inputs"):
     subject=st.text_input("Insert Subject", max_chars=20)
 
     #Quiz level
-    level=st.text_input("Complexity level of Questions", max_chars=20, placeholder="Simple")
+    level=st.text_input("Complexity level of Questions", max_chars=20, placeholder="Easy")
 
     #add button
     button = st.form_submit_button("Create MCQs")
