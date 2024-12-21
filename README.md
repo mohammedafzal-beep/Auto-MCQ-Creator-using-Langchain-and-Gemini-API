@@ -1,7 +1,5 @@
 # Automated MCQ Generation with LangChain 🔗 and Gemini API 🚀
 
-[Live Demo](C:\Users\afz31\mcq_gen\assets\Live_Demo.mp4)
-
 ## Core Logic of Chain-Based Workflow 🔗
 This project utilizes **LangChain** framework to create, evaluate, and analyze multiple-choice quizzes (MCQs) in an automated and efficient manner. The workflow is composed of three sequential steps:
 ### 1. **Quiz Generation 🧠**
@@ -40,3 +38,4 @@ These three steps are orchestrated using a **SequentialChain**, which:
    - A brief complexity analysis of the quiz.
 
 Enjoy creating intelligent, tailored quizzes with ease! 💡🎉
+Make sure to download the live demo video in assets folder for a step-by-step walkthrough!
