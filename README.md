@@ -38,4 +38,5 @@ These three steps are orchestrated using a **SequentialChain**, which:
    - A brief complexity analysis of the quiz.
 
 Enjoy creating intelligent, tailored quizzes with ease! 💡🎉
+
 Make sure to download the live demo video in assets folder for a step-by-step walkthrough!
