@@ -11,7 +11,7 @@ with open(r'C:\Users\afz31\mcq_gen\resp.json','r') as file:
 st.write("Streamlit version:", st.__version__)
 
 #create a title for the app
-st.title("MCQ Creator Application with Langchain and Gemini") 
+st.title("Auto MCQ Creator with Langchain and Gemini API") 
 
 #Create a form using st.form
 with st.form("user_inputs"):
